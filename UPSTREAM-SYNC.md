@@ -2,6 +2,27 @@
 
 This fork is based on [geerlingguy/mac-dev-playbook](https://github.com/geerlingguy/mac-dev-playbook). This document explains how to keep your fork up-to-date with Jeff's latest improvements while preserving your personal customizations.
 
+## Branch Model
+
+> **Read this first.** The commands further down assume you are syncing a single
+> trunk. This fork uses two branches instead:
+>
+> - **`master`** - a pristine mirror of `upstream/master`. Fast-forward only.
+>   No personal work ever lands here.
+> - **`development`** - the actual trunk, where all personal work lives.
+>
+> So the flow is: fast-forward `master` from upstream, then **merge `master` into
+> `development`**. Where a command below says `git merge upstream/master` while on
+> your working branch, prefer:
+>
+> ```bash
+> git fetch upstream
+> git fetch . upstream/master:master     # fast-forward master, no checkout
+> git push origin master
+> git checkout development
+> git merge master
+> ```
+
 ## Architecture Overview
 
 This playbook uses a clean separation between upstream defaults and personal customizations:

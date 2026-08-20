@@ -84,8 +84,27 @@ See `UPSTREAM-SYNC.md` for syncing with geerlingguy/mac-dev-playbook. Personal c
 
 ## Git Workflow
 
-- `origin` - This fork (`jeffduska/mac-dev-playbook`); `upstream` - `geerlingguy/mac-dev-playbook`.
-- **Always work on a feature branch.** Never commit directly to `master`.
-- `master` tracks `upstream/master` and is updated by fast-forward only
-  (`git fetch upstream && git fetch . upstream/master:master`), then pushed to `origin`.
-- Rebase feature branches onto the updated `master` rather than merging it in.
+### Branches
+- **`development`** - The trunk. All real work lands here; treat it as the main branch.
+- **`master`** - A pristine mirror of `upstream/master` (geerlingguy). Kept solely to
+  track what Jeff Geerling is doing. Never commit personal work here.
+- Remotes: `origin` = this fork (`jeffduska/mac-dev-playbook`),
+  `upstream` = `geerlingguy/mac-dev-playbook` (read-only in practice).
+
+### Syncing with upstream
+```bash
+git fetch upstream                       # update remote-tracking refs
+git fetch . upstream/master:master       # fast-forward master (no checkout needed)
+git push origin master                   # mirror it to the fork
+git checkout development && git merge master   # bring upstream work into the trunk
+```
+`master` is **fast-forward only** - if it ever refuses to fast-forward, something
+was committed to it by mistake. Merge (don't rebase) `master` into `development`:
+`development` has published history and a long-standing merge-based pattern.
+
+### Feature work
+- **Always work on a feature branch**, branched from `development`.
+- Rebase the feature branch onto `development` to pick up changes, then merge it in.
+- Never commit directly to `development` or `master`.
+
+See `UPSTREAM-SYNC.md` for the fuller sync procedure.
