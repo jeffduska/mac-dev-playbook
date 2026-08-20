@@ -81,3 +81,11 @@ GitHub Actions runs on macOS 14 and 15:
 ## Upstream Sync
 
 See `UPSTREAM-SYNC.md` for syncing with geerlingguy/mac-dev-playbook. Personal config in `config.yml` stays local; only `default.config.yml` comes from upstream.
+
+## Git Workflow
+
+- `origin` - This fork (`jeffduska/mac-dev-playbook`); `upstream` - `geerlingguy/mac-dev-playbook`.
+- **Always work on a feature branch.** Never commit directly to `master`.
+- `master` tracks `upstream/master` and is updated by fast-forward only
+  (`git fetch upstream && git fetch . upstream/master:master`), then pushed to `origin`.
+- Rebase feature branches onto the updated `master` rather than merging it in.
